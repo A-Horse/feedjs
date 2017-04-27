@@ -1,12 +1,22 @@
 import program from 'commander';
+import Controller from './ctrl';
 import loop from './lib/loop';
 
 program
   .version('0.0.1')
-  .option('-p, --peppers', 'Add peppers')
-  .option('-P, --pineapple', 'Add pineapple')
-  .option('-b, --bbq-sauce', 'Add bbq sauce')
-  .option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', 'marble')
-  .parse(process.argv);
+  .option('-C, --chdir <path>', 'change the working directory')
+  .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
+  .option('-T, --no-tests', 'ignore test hook');
 
-loop(["http://nullprogram.com/feed/", "https://www.raspberrypi.org/feed/"]);
+program
+  .version('0.0.1')
+  .command('start')
+  .action(() => {
+
+  });
+
+const ctrl = new Controller();
+ctrl.start();
+setTimeout(function() {
+  ctrl.stop();
+}, 15000);
