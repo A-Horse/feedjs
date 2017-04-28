@@ -6,15 +6,9 @@ export const startListenFeed = () => {
   // const hash
   const subscription = loop(
     [{url: "http://nullprogram.com/feed/"}, {url: "https://www.raspberrypi.org/feed/"}]
-  ).subscribe(async (feedRawData) => {
-    const feedXml = await xml2js.parseString(feedRawData);
-    console.log('md5', md5(feedRawData));
-    // console.log(
-    //   '-------'
-    // );
-    // console.log(
-    //   feedXml
-    // );
+  ).subscribe(async (feed) => {
+    const feedXml = await xml2js.parseString(feed.feedRawData);
+    console.log(feed);
   });
   return () => subscription.unsubscribe();
 };
