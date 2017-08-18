@@ -10,17 +10,15 @@ const loop = sources => {
       .concatMap(async source => {
         const feedRawData = await (await fetch(source.url)).text();
         return { ...source, feedRawData };
-      })
-      .filter(feed => {
+      }).filter(feed => {
         const hash = md5(feed.feedRawData);
         if (hashMap[feed.url] === hash) {
           return false;
         }
         hashMap[feed.url] = hash;
         return true;
-      })
-      .catch(error => {
-        console.error(`fetch failure : ${error.message}`);
+      }).catch(error => {
+        console.error(`fetch failure : ${error.message}`); // TODO 如何向外抛出错误
         return Observable.of(null);
       })
   );
